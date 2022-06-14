@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
+
 class Signup : AppCompatActivity() {
     private lateinit var  edtName: EditText
     private lateinit var  edtEmail: EditText
@@ -49,7 +50,7 @@ class Signup : AppCompatActivity() {
             }
 
     }
-    private fun addUsertoDatabase(name: String,email: String,uid: String) {
+    private fun addUsertoDatabase(name: String, email: String, uid: String) {
 
         mDbRef= FirebaseDatabase.getInstance().getReference()
         mDbRef.child("user").child(uid).setValue(User(name,email,uid))

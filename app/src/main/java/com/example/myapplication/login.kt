@@ -42,13 +42,13 @@ class login : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
 
-                    val intent = Intent(this@login, MainActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     finish()
                     startActivity(intent)
 
                 }
                 else {
-                    Toast.makeText(this@login, "User does not Exists", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "User does not Exists", Toast.LENGTH_SHORT).show()
 
                 }
             }

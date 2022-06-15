@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Signup">
+    tools:context=".Signup"
+    android:background="@drawable/bg"
+    >
     <ImageView
         android:background="@drawable/logo"
         android:id="@+id/appLogo"
@@ -57,9 +59,10 @@
         android:layout_below="@id/edt_pass"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:background="@drawable/btn"
+        android:text="Sign up"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:text="Sign up" />
+        android:textSize="20sp" />
 
 
 </RelativeLayout>

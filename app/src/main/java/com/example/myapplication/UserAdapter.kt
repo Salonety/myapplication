@@ -21,18 +21,17 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>): Recycler
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.user_layout,parent,false)
-        return UserViewHolder(view)
+        val itemView= LayoutInflater.from(parent.context).inflate(R.layout.user_layout,parent,false)
+        return UserViewHolder(itemView)
     }
 
-    @SuppressLint("RestrictedApi")
+
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentUser=userList[position]
         holder.textName.text= currentUser.name
         holder.itemView.setOnClickListener {
             val intent= Intent(context,MainActivity::class.java)
             intent.putExtra("name",currentUser.name)
-            intent.putExtra("uid",currentUser.uid)
             context.startActivity(intent)
         }
     }

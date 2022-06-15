@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Adapter
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,22 +32,22 @@ class MainActivity : AppCompatActivity() {
         userRecyclerView=findViewById(R.id.rv)
         userRecyclerView.layoutManager= LinearLayoutManager(this)
         userRecyclerView.adapter=adapter
-        mDbRef.child("user").addValueEventListener(object: ValueEventListener {
-            @SuppressLint("RestrictedApi")
+        userRecyclerView.setHasFixedSize(true)
+        userList= arrayListOf()
+        getUserData()
+
+    }
+
+    private fun getUserData() {
+       mDbRef=FirebaseDatabase.getInstance().getReference("Users")
+        mDbRef.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
-                for (postSnapshot in snapshot.children) {
-                    val currentUser = postSnapshot.getValue(User::class.java)
-                    if (mAuth.currentUser?.uid !=currentUser?.
-
-
-
-
-                        uid) {
-                        userList.add(currentUser!!)
-                    }
+                if (snapshot.exists())
+                {
+                     val user = snapshot.getValue(User::class.java)
+                    userList.add(user!!)
                 }
-                adapter.notifyDataSetChanged()
+                userRecyclerView.adapter=UserAdapter(userList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -54,7 +55,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -75,4 +75,5 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 }
+
 

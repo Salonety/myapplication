@@ -57,6 +57,7 @@
 
     <Button
         android:id="@+id/btnSignUp"
+        android:backgroundTint="#789140"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/edt_pass"

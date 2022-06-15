@@ -21,6 +21,7 @@
         android:layout_height="50dp"
         android:layout_below="@+id/appLogo"
         android:layout_marginTop="10dp"
+        android:background="@drawable/edt"
         android:hint="Name"
         android:paddingLeft="15dp"
         android:layout_marginLeft="20dp"
@@ -34,6 +35,7 @@
         android:layout_height="50dp"
         android:layout_below="@+id/edt_Name"
         android:layout_marginTop="10dp"
+        android:background="@drawable/edt"
         android:hint="Email"
         android:paddingLeft="15dp"
         android:layout_marginLeft="20dp"
@@ -47,6 +49,7 @@
         android:layout_below="@+id/edt_Email"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/edt"
         android:layout_marginRight="20dp"
         android:hint="Password"
         android:paddingLeft="13dp" />

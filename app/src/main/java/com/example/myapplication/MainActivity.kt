@@ -1,11 +1,11 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Adapter
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,49 +15,64 @@ import com.google.firebase.firestore.auth.User
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var userRecyclerView: RecyclerView
+    private lateinit var userList: ArrayList<User>
+    private lateinit var adapter: UserAdapter
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mDbRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
+        mAuth=FirebaseAuth.getInstance()
+        mDbRef= FirebaseDatabase.getInstance().getReference()
+        userList= ArrayList()
 
-        // this creates a vertical layout Manager
-        recyclerview.layoutManager = LinearLayoutManager(this)
+        adapter= UserAdapter(this,userList)
+        userRecyclerView=findViewById(R.id.rv)
+        userRecyclerView.layoutManager= LinearLayoutManager(this)
+        userRecyclerView.adapter=adapter
+        mDbRef.child("user").addValueEventListener(object: ValueEventListener {
+            @SuppressLint("RestrictedApi")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
+                for (postSnapshot in snapshot.children) {
+                    val currentUser = postSnapshot.getValue(User::class.java)
+                    if (mAuth.currentUser?.uid !=currentUser?.
 
-        // ArrayList of class ItemsViewModel
-        val data = ArrayList<ItemsViewModel>()
 
-        // This loop will create 20 Views containing
-        // the image with the count of view
-        for (i in 1..20) {
-            data.add(ItemsViewModel(R.drawable.game, "Item " + i))
+
+
+                        uid) {
+                        userList.add(currentUser!!)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId== R.id.action_logout){
+            //write logic for logout
+            mAuth.signOut()
+            val intent= Intent(this@MainActivity,login::class.java)
+            finish()
+            startActivity(intent)
+            return true
+
         }
-
-        // This will pass the ArrayList to our Adapter
-        val adapter = CustomAdapter(data)
-
-        // Setting the Adapter with the recyclerview
-        recyclerview.adapter = adapter
-    }
-
-override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.menu,menu)
-    return super.onCreateOptionsMenu(menu)
-}
-
-override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    if (item.itemId== R.id.action_logout){
-        //write logic for logout
-        mAuth.signOut()
-        val intent= Intent(this@MainActivity,login::class.java)
-        finish()
-        startActivity(intent)
         return true
-
     }
-    return true
 }
-}
-
-
 

@@ -10,8 +10,9 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:itemCount="5"
-        android:scrollbarStyle="insideInset"
+        tools:itemCount="15"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
         tools:listitem="@layout/card_view_design" />
 
 
